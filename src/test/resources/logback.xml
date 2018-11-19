@@ -1,0 +1,108 @@
+<!--每天生成一个文件，归档文件保存30天：-->
+<configuration >
+
+    <!--设置自定义pattern属性-->
+    <!--<property name="pattern" value="%d{HH:mm:ss.SSS} [%-5level] [%thread] [%logger] %msg%n"/>-->
+
+    <!--控制台输出日志-->
+    <!--<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--LevelFilter：级别过滤器，比较 调用的日志方法级别和此过滤器的级别进行比较，如果与debug() info() warn()等方法的级别与此过滤器的级别相同，才会进行日志打印。-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+        <!--<level>INFO</level>-->
+        <!--<onMatch>ACCEPT</onMatch>-->
+        <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+
+        <!--临界值过滤器：大于等于此级别的 调用日志方法 才会被打印   此级别 <= 调用日志方法的级别 -->
+        <!--例如，此过滤器设置了INFO级别，那么调用debug方法的日志不会被输出-->
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+        <!--<level>INFO</level>-->
+        <!--</filter>-->
+
+        <!--求值过滤器：可以设置对应文本内容，如果要输出的日志内容，包含此文本内容，那么就返回true,可以进行日志输出-->
+        <!--<filter class="ch.qos.logback.core.filter.EvaluatorFilter">-->
+            <!--<evaluator>-->
+            <!--<expression>return message.contains("jiaboyan");</expression>-->
+            <!--</evaluator>-->
+            <!--<OnMatch>ACCEPT</OnMatch>-->
+            <!--<OnMismatch>DENY</OnMismatch>-->
+        <!--</filter>-->
+        <!--设置控制台输出日志的格式-->
+        <!--<encoder>-->
+            <!--<pattern>${pattern}</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>e:/log.out</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %p %c - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>e:/log.out</file>
+        <append>true</append>
+        <immediateFlush>false</immediateFlush>
+        <bufferSize>8192</bufferSize>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %p %c - %m%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--时间 日志等级 类所在全限定类名：代码中行号  - 日志信息回车符-->
+    <!--11:04:40.042 INFO  logbackDemo:19 - Info Message!-->
+    <appender name ="ASYNC" class= "ch.qos.logback.classic.AsyncAppender">  
+        <discardingThreshold>0</discardingThreshold>  
+        <queueSize>128</queueSize>  
+        <appender-ref ref ="FILE"/>  
+    </appender>  
+
+
+    <!--&lt;!&ndash;滚动记录日志文件：&ndash;&gt;-->
+    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--&lt;!&ndash;当天生成的日志文件名称：&ndash;&gt;-->
+        <!--<file>e:/log.out</file>-->
+        <!--&lt;!&ndash;根据时间来记录日志文件：&ndash;&gt;-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--&lt;!&ndash;归档日志文件的名称：&ndash;&gt;-->
+            <!--<fileNamePattern>testLog-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+            <!--&lt;!&ndash;归档文件保存30天&ndash;&gt;-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
+
+        <!--&lt;!&ndash;生成的日志信息格式&ndash;&gt;-->
+        <!--<encoder>-->
+            <!--<pattern>${pattern}</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!--设置输出文件目的地：-->
+    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--设置当前活动日志文件名称-->
+        <!--<file>test.log</file>-->
+        <!--设置超过日志文件大小后，可以生成几个归档文件-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<fileNamePattern>tests-%i.log.zip</fileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>5</maxIndex>-->
+        <!--</rollingPolicy>-->
+
+        <!--设置日志文件大小范围-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>1MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${pattern}</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!--根root logger-->
+    <root level="info">
+        <!--设置根logger的日志输出目的地-->
+        <appender-ref ref="ASYNC" />
+        <!--<appender-ref ref="FILE" />-->
+    </root>
+</configuration>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+    <!--monitorInterval每隔30秒刷新一次重新加载log4j2的配置文件-->
+    <!--debug表示打印出log4j2内部的日志信息-->
+
+    <Appenders>
+        <!--<Console name="Console" target="SYSTEM_OUT">-->
+            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+        <!--</Console>-->
+
+        <!--普通文件：-->
+        <!--immediateFlush设置成false情况下在jvm结束之前会刷新到磁盘中，log4j1不会刷新日志丢失-->
+        <!--bufferedIO bufferSize 也会在jvm结束前刷新到磁盘中-->
+       <!--<File name="File" fileName="e:/log.out" append="true">-->
+            <!--<PatternLayout>-->
+                <!--<Pattern>%d{HH:mm:ss.SSS} %p %c - %m%n</Pattern>-->
+            <!--</PatternLayout>-->
+        <!--</File>-->
+
+        <File name="File" fileName="e:/log.out" append="true"
+              immediateFlush="false" bufferedIO="true" bufferSize="8192">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss.SSS} %p %c - %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <!--异步appender：-->
+        <!--<Async name="Async">-->
+            <!--<AppenderRef ref="File"/>-->
+        <!--</Async>-->
+
+        <!--循环写入文件：-->
+        <!--<RollingFile name="RollingFile" fileName="e:/log.out" filePattern="e:/app-%d{yyyy-MM-dd_HH-mm}-%i.out">-->
+            <!--&lt;!&ndash;注意%d{MM-dd-yyyy}要用年月日格式，不能加上时分秒，并且最后要有%i，这样log4j2才能判断出哪天一共产生几个文件&ndash;&gt;-->
+            <!--<PatternLayout>-->
+                <!--<Pattern>%C %c %logger{0} %L - %msg%n</Pattern>-->
+            <!--</PatternLayout>-->
+            <!--&lt;!&ndash;滚动策略：&ndash;&gt;-->
+            <!--<Policies>-->
+                <!--&lt;!&ndash;<TimeBasedTriggeringPolicy interval="1" modulate="true"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;按照时间来滚动，当filePattern设置的为分钟时，interval单位为分钟，每分钟进行一次分隔；&ndash;&gt;-->
+                <!--&lt;!&ndash;modulate说明是否对封存时间进行调制，如果设置为true,则封存时间以每天的0点，或者每小时0分开始，每间隔1分钟/1小时，产生一个文件；&ndash;&gt;-->
+                <!--&lt;!&ndash;modulate=true，则封存时间将以0点为边界进行偏移计算。比如，modulate=true，interval=4hours，那么假设上次封存日志的时间为03:00，则下次封存日志的时间为04:00，之后的封存时间依次为08:00，12:00，16:00，。。。&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<CronTriggeringPolicy schedule="0 0 * * * ?"/>&ndash;&gt;-->
+
+                <!--<SizeBasedTriggeringPolicy size="1000 kb"/>    &lt;!&ndash;当日志满足设置的大小时候，进行滚动，生成新文件 log.out变成 log-1.out,,再次达到时候log.out -> log-2.out &ndash;&gt;-->
+            <!--</Policies>-->
+            <!--<DefaultRolloverStrategy max="2"/>  &lt;!&ndash;日志保存最大文件数，超过此数字则删除&ndash;&gt;-->
+            <!--&lt;!&ndash;对于RollingFile来说，DefaultRolloverStrategy不声明的话也有默认值，最大只能保留7个文件&ndash;&gt;-->
+        <!--</RollingFile>-->
+    </Appenders>
+
+    <Loggers>
+        <!--includeLocation异步logger中，想显示行号，必须添加includeLocation=true-->
+        <!--<Logger name="com.jiaboyan.logDemo.log4j2Demo" level="info" additivity="false" includeLocation="false" >-->
+            <!--<AppenderRef ref="RollingFile"/>-->
+        <!--</Logger>-->
+
+        <!--<Root level="info" >-->
+            <!--<AppenderRef ref="Async"/>-->
+            <!--<AppenderRef ref="File"/>-->
+            <!--<AppenderRef ref="Console"/>-->
+            <!--<AppenderRef ref="RollingFile"/>-->
+        <!--</Root>-->
+
+        <AsyncRoot level="info" >
+            <AppenderRef ref="File"/>
+        </AsyncRoot>
+
+    </Loggers>
+
+</Configuration>

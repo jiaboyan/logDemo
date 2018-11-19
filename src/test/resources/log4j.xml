@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+
+    <!--<appender name="FILE" class="org.apache.log4j.FileAppender">-->
+        <!--<param name="File" value="e:/log.out" />-->
+        <!--<param name="append" value="true"/>-->
+        <!--<layout class="org.apache.log4j.PatternLayout">-->
+            <!--<param name="ConversionPattern" value="%d{HH:mm:ss.SSS} %p %c - %m%n" />-->
+        <!--</layout>-->
+    <!--</appender>-->
+
+    <!--<appender name="FILE" class="org.apache.log4j.FileAppender">-->
+        <!--<param name="File" value="e:/log.out" />-->
+        <!--<param name="append" value="true"/>-->
+        <!--<param name="immediateFlush" value="false"/>-->
+        <!--<param name="bufferedIO" value="true"/>-->
+        <!--<param name="bufferSize" value="8192"/>-->
+        <!--<layout class="org.apache.log4j.PatternLayout">-->
+            <!--<param name="ConversionPattern" value="%d{HH:mm:ss.SSS} %p %c - %m%n" />-->
+        <!--</layout>-->
+    <!--</appender>-->
+
+
+    <!--<appender name="HOOKFILE" class="com.jiaboyan.logDemo.HookFileAppender">-->
+    <!--<param name="File" value="e:/log.out" />-->
+    <!--<param name="ImmediateFlush" value="false"/>-->
+    <!--<param name="bufferedIO" value="true"/>-->
+    <!--<param name="bufferSize" value="8192"/>-->
+    <!--<layout class="org.apache.log4j.PatternLayout">-->
+    <!--<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />-->
+    <!--</layout>-->
+    <!--</appender>-->
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <param name="ImmediateFlush" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %t %-5p (%c:%L) - %m%n"/>
+        </layout>
+    </appender>
+
+    <!--<appender name="AsyncAppender" class="org.apache.log4j.AsyncAppender">-->
+        <!--<appender-ref ref="FILE"/>-->
+    <!--</appender>-->
+
+    <category name="com.jiaboyan" additivity="false">
+        <level value="OFF"></level>
+        <appender-ref ref="CONSOLE" />
+    </category>
+
+    <root>
+        <priority value="info" />
+        <!--<appender-ref ref="FILE" />-->
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</log4j:configuration>
